@@ -20,9 +20,9 @@ A fun web app that provides info on Boston Subway routes and stops! This project
 
 3. Build docker containers
 
-```bash
-  docker compose build --no-cache
-```
+   ```bash
+   docker compose build --no-cache
+   ```
 
 4. Run migrations
 
@@ -76,9 +76,9 @@ A fun web app that provides info on Boston Subway routes and stops! This project
 
 3. Install npm packages
 
-```bash
-  npm install
-```
+   ```bash
+   npm install
+   ```
 
 4. Start the react app!
 
