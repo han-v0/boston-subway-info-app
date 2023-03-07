@@ -128,6 +128,17 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+name = "django-cors-headers"
+optional = false
+python-versions = ">=3.7"
+version = "3.14.0"
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
+category = "main"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
 name = "django-environ"
 optional = false
@@ -549,7 +560,7 @@ python-versions = "*"
 version = "0.2.6"
 
 [metadata]
-content-hash = "6a38e3a56e2eb8e8f3696958d74ec46ac4558334e2d6b56e7c760f250d91f89b"
+content-hash = "2e83a46e93b63689ae224579c0c9cea82dc28577fc846eaf035e9a5849e8c54f"
 python-versions = "^3.10"
 
 [metadata.files]
@@ -563,6 +574,7 @@ click = []
 colorama = []
 decorator = []
 django = []
+django-cors-headers = []
 django-environ = []
 envs = []
 executing = []

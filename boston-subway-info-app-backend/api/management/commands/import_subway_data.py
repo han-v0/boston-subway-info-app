@@ -24,7 +24,7 @@ class Command(BaseCommand):
             Route.objects.all().delete()
             Stop.objects.all().delete()
         try:
-            routes = requests.get(f"{settings.V3_HOST}/routes?api_key={settings.V3_API_KEY}").json()
+            routes = requests.get(f"{settings.V3_HOST}/routes").json()
         except Exception as err:
             logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
             exit
@@ -35,7 +35,7 @@ class Command(BaseCommand):
         
         
         try:
-            stops = requests.get(f"{settings.V3_HOST}/stops?api_key={settings.V3_API_KEY}").json()
+            stops = requests.get(f"{settings.V3_HOST}/stops").json()
         except Exception as err:
             logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
             exit
