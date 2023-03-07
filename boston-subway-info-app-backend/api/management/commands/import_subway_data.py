@@ -13,10 +13,18 @@ from api.models import Route, Stop
 class Command(BaseCommand):
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
+        parser.add_argument(
+            "--delete",
+            action="store_true",
+        )
 
     def handle(self, *args, **options):
+
+        if options["delete"]:
+            Route.objects.all().delete()
+            Stop.objects.all().delete()
         try:
-            routes = requests.get(f"{settings.V3_HOST}/routes").json()
+            routes = requests.get(f"{settings.V3_HOST}/routes?api_key={settings.V3_API_KEY}").json()
         except Exception as err:
             logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
             exit
@@ -27,7 +35,7 @@ class Command(BaseCommand):
         
         
         try:
-            stops = requests.get(f"{settings.V3_HOST}/stops").json()
+            stops = requests.get(f"{settings.V3_HOST}/stops?api_key={settings.V3_API_KEY}").json()
         except Exception as err:
             logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
             exit
@@ -35,19 +43,8 @@ class Command(BaseCommand):
         for data in stops["data"]:
             [stop, _] = Stop.objects.get_or_create(stop_id=data["id"])
             stop.name = data["attributes"]["name"]
-            
-            
-            try:
-                routes_of_stop = requests.get(f"{settings.V3_HOST}/routes?filter[stop]={stop.stop_id}").json()
-            except Exception as err:
-                logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
-                exit
-            if "data" in routes_of_stop and len(routes_of_stop["data"]):
-                for item in routes_of_stop["data"]:
-                    [route, _] = Route.objects.get_or_create(route_id=item["id"])
-                    route.stops.set(list(route.stops.all()) + [stop])
-                    route.save()
             stop.save()
+            
         
 
         logging.info(f"Successfully import routes and stops into DB")
