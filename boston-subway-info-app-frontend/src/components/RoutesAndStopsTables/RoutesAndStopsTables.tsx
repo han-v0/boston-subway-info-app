@@ -7,8 +7,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Route, StopsInfo, Stop } from "../../utils/types";
 
-const DisplayTable = () => {
-  const [stops, setStops] = React.useState<StopsInfo>({
+const RoutesAndStopsTables = () => {
+  const [stopsInfo, setStopsInfo] = React.useState<StopsInfo>({
     route_id: "",
     stops: [],
   });
@@ -17,13 +17,13 @@ const DisplayTable = () => {
   const handleOnClick = (route_id: string) => {
     getStops(route_id)
       .then((data: Array<Stop>) => {
-        setStops({ route_id, stops: data });
+        setStopsInfo({ route_id, stops: data });
       })
       .catch();
   };
 
   const handleClear = () => {
-    setStops({ route_id: "", stops: [] });
+    setStopsInfo({ route_id: "", stops: [] });
   };
 
   React.useEffect(() => {
@@ -33,7 +33,7 @@ const DisplayTable = () => {
       })
       .catch();
   }, []);
-  React.useEffect(() => {}, [stops]);
+  React.useEffect(() => {}, [stopsInfo]);
   return (
     <Row>
       <Col style={{ paddingLeft: "20px" }}>
@@ -82,11 +82,11 @@ const DisplayTable = () => {
           </Button>
         </div>
 
-        {stops.stops.length > 0 ? (
+        {stopsInfo.stops.length > 0 ? (
           <>
             <Row
               style={{ display: "flex", justifyContent: "center" }}
-            >{`Stops for Route ${stops.route_id}`}</Row>
+            >{`Stops for Route ${stopsInfo.route_id}`}</Row>
             <Row>
               <Table striped bordered hover>
                 <thead>
@@ -96,7 +96,7 @@ const DisplayTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {stops.stops.map((stop: Stop) => {
+                  {stopsInfo.stops.map((stop: Stop) => {
                     return (
                       <tr key={stop.stop_id}>
                         <td>{stop.stop_id}</td>
@@ -112,8 +112,8 @@ const DisplayTable = () => {
           <Card border="light" style={{ width: "18rem" }}>
             <Card.Body>
               <Card.Text>
-                Click on the id on the left of the route to look at for all
-                stops on that route. Use the Clear button below to clear the
+                Click on the Route ID on the Subway Routes table to search for
+                all stops on that route. Use the Clear button above to clear the
                 Stops table.
               </Card.Text>
             </Card.Body>
@@ -124,4 +124,4 @@ const DisplayTable = () => {
   );
 };
 
-export default DisplayTable;
+export default RoutesAndStopsTables;

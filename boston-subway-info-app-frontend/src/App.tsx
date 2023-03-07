@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DisplayTable from "./components/DisplayTable";
+import RoutesAndStopsTables from "./components/RoutesAndStopsTables";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           Boston Subway Information
         </Col>
       </Row>
-      <DisplayTable />
+      <RoutesAndStopsTables />
     </Container>
   );
 }
