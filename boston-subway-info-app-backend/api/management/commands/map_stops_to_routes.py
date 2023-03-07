@@ -17,13 +17,13 @@ class Command(BaseCommand):
 
         for stop in stops:      
             try:
-                routes_of_stop = requests.get(f"{settings.V3_HOST}/routes?filter[stop]={stop.stop_id}?api_key={settings.V3_API_KEY}").json()
+                routes_of_stop = requests.get(f"{settings.V3_HOST}/routes?filter[stop]={stop.stop_id}").json()
             except Exception as err:
                 logging.error(f"Error with getting data of stops from V3 API. Full details: {err}")
                 exit
             if "data" in routes_of_stop and len(routes_of_stop["data"]):
                 for item in routes_of_stop["data"]:
-                    [route, _] = Route.objects.get(route_id=item["id"])
+                    route = Route.objects.get(route_id=item["id"])
                     route.stops.set(list(route.stops.all()) + [stop])
                     route.save()
             stop.save()
