@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "boston-subway-info-app-backend"
+version = "0.1.0"
+description = ""
+authors = ["Cindy Vo <cindyhvo824@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "4.1.7"
+uvicorn = "^0.20.0"
+fastapi = "^0.92.0"
+pydantic = "^1.10.5"
+django-environ = "^0.10.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.10"
+flake8 = {version = "^6.0.0"}
+ipython = "^8.7.0"
+mypy = "^0.991"
+envs = "^1.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
