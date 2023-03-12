@@ -1,27 +1,23 @@
 from typing import List
-
 from django.db import models
 from pydantic import BaseModel
 
-
-class FastStop(BaseModel):
+class StopBase(BaseModel):
     stop_id: str = None
     name: str = None
 
     class Config:
         orm_mode = True
 
-class FastStops(BaseModel):
-    stops: List[FastStop] = []
+class Stops(BaseModel):
+    stops: List[StopBase] = []
 
-class FastRoute(BaseModel):
+class RouteBase(BaseModel):
     route_id: str = None
     name: str = None
 
     class Config:
         orm_mode = True
 
-class FastRoutes(BaseModel):
-    routes: List[FastRoute] = []
 
     

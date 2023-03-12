@@ -1,7 +1,7 @@
-export const getRoutes = async () => {
-    const data = await fetch(`${process.env.REACT_APP_SUBWAY_INFO_APP_API as string}/routes/`);
+export const getRoutes = async (currentPage: number = 1) => {
+    const data = await fetch(`${process.env.REACT_APP_SUBWAY_INFO_APP_API as string}/routes/?size=10&page=${currentPage}`);
     const routes = await data.json()
-    return routes.routes;
+    return routes;
 }
 
 export const getStops = async (route: string) => {

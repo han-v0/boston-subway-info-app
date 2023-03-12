@@ -14,6 +14,7 @@ from django.core.asgi import get_asgi_application
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import Page, paginate, add_pagination
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
