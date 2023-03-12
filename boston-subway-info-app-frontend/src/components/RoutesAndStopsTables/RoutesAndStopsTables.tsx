@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { getRoutes, getStops } from "../../api";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Pagination from "react-bootstrap/Pagination";
 import { Route, StopsInfo, Stop } from "../../utils/types";
 
 const RoutesAndStopsTables = () => {
@@ -13,6 +14,8 @@ const RoutesAndStopsTables = () => {
     stops: [],
   });
   const [routes, setRoutes] = React.useState<Array<Route>>([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
 
   const handleOnClick = (route_id: string) => {
     getStops(route_id)
@@ -22,18 +25,48 @@ const RoutesAndStopsTables = () => {
       .catch();
   };
 
+  const handleOnClickPagination = (active: number) => {
+    getRoutes(active)
+      .then((data: { items: Array<Route>; page: number; pages: number }) => {
+        setRoutes(data.items);
+        setCurrentPage(data.page);
+        setTotalPages(data.pages);
+      })
+      .catch();
+  };
+
+  const setPaginationOnTable = () => {
+    let active = currentPage;
+    let items = [];
+    for (let i = 1; i <= totalPages; i++) {
+      items.push(
+        <Pagination.Item
+          key={i}
+          active={i === active}
+          onClick={() => handleOnClickPagination(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+    return items;
+  };
+
   const handleClear = () => {
     setStopsInfo({ route_id: "", stops: [] });
   };
 
   React.useEffect(() => {
     getRoutes()
-      .then((data: Array<Route>) => {
-        setRoutes(data);
+      .then((data: { items: Array<Route>; page: number; pages: number }) => {
+        setRoutes(data.items);
+        setCurrentPage(data.page);
+        setTotalPages(data.pages);
       })
       .catch();
   }, []);
   React.useEffect(() => {}, [stopsInfo]);
+
   return (
     <Row>
       <Col style={{ paddingLeft: "20px" }}>
@@ -72,6 +105,9 @@ const RoutesAndStopsTables = () => {
               })}
             </tbody>
           </Table>
+        </Row>
+        <Row>
+          <Pagination>{setPaginationOnTable()}</Pagination>
         </Row>
       </Col>
 
