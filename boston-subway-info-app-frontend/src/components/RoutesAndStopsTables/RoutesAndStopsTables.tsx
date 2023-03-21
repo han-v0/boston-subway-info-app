@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
 import { Route, StopsInfo, Stop } from "../../utils/types";
+import CommonTable from "../common";
 
 const RoutesAndStopsTables = () => {
   const [stopsInfo, setStopsInfo] = React.useState<StopsInfo>({
@@ -36,8 +37,8 @@ const RoutesAndStopsTables = () => {
   };
 
   const setPaginationOnTable = () => {
-    let active = currentPage;
-    let items = [];
+    const active = currentPage;
+    const items = [];
     for (let i = 1; i <= totalPages; i++) {
       items.push(
         <Pagination.Item
@@ -70,42 +71,11 @@ const RoutesAndStopsTables = () => {
   return (
     <Row>
       <Col style={{ paddingLeft: "20px" }}>
-        <Row style={{ display: "flex", justifyContent: "center" }}>
-          All Subway Routes in Boston
-        </Row>
-        <Row>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Route ID</th>
-                <th>Route Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {routes.map((route: Route) => {
-                return (
-                  <tr key={route.route_id}>
-                    <td>
-                      <p
-                        style={{
-                          cursor: "pointer",
-                          color: "#0d6efd",
-                          textDecoration: "underline",
-                        }}
-                        onClick={() => {
-                          handleOnClick(route.route_id);
-                        }}
-                      >
-                        {route.route_id}
-                      </p>
-                    </td>
-                    <td>{route.name}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </Row>
+        <CommonTable
+          handleOnClick={handleOnClick}
+          data={routes}
+          whichType={"routes"}
+        ></CommonTable>
         <Row>
           <Pagination>{setPaginationOnTable()}</Pagination>
         </Row>
